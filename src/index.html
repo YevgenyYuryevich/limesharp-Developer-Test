@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <title>Ed bull Developer Tests</title>
+</head>
+<body>
+<h2>Please look at console</h2>
+<script type="text/javascript">
+
+  // ES6 way
+  function repeat(arr) {
+    return [...arr, ...arr, ...arr];
+  }
+
+  // Regular way
+  function pureRepeat(arr) {
+    return arr.concat(arr).concat(arr);
+  }
+
+  console.log("repeat", repeat([1, 2, 3]));
+  console.log("pure repeat", pureRepeat([1, 2, 3]));
+
+  // Advanced way: calculation amount: O(N + M)
+  // N is length of input string, M: count of vowels
+
+  function reformat(str) {
+    const vowels = ["a", "e", "i", "o", "u"];
+    const vowelFlags = {};
+    for (const vowel of vowels) {
+      vowelFlags[vowel] = true;
+    }
+    let correctedStr = "";
+    const lowerStr = str.toLowerCase();
+    for (const char of lowerStr) {
+      if (vowelFlags[char]) {
+        continue;
+      }
+      correctedStr += char;
+    }
+    if (correctedStr) {
+      return correctedStr.charAt(0).toUpperCase() + correctedStr.slice(1);
+    }
+    return correctedStr;
+  }
+
+  // Normal way: calculation amount: O(N * M);
+  // N is length of input string, M: count of vowels
+
+  function reformat_withNormalWay(str) {
+    const lowerStr = str.toLowerCase();
+    const noVowelStr = lowerStr.replace(/[aeiou]/g, "");
+    if (noVowelStr) {
+      return noVowelStr.charAt(0).toUpperCase() + noVowelStr.slice(1);
+    }
+    return noVowelStr;
+  }
+
+  console.log("reformat:", reformat("liMeSHArp DeveLoper TEST"));
+  console.log("reformat with normal way:", reformat_withNormalWay("liMeSHArp DeveLoper TEST"));
+
+  // Allow both array and string as binaryNumber input
+
+  function next_binary_number(binaryNumber) {
+    let binaryArray;
+    if (Array.isArray(binaryNumber)) {
+      binaryArray = binaryNumber;
+    } else {
+      binaryArray = binaryNumber.split("").map(bv => Number(bv));
+    }
+
+    let i;
+    for (i = binaryArray.length - 1; i >= 0; i--) {
+      if (binaryArray[i] === 0) {
+        break;
+      }
+    }
+    return [
+      ...binaryArray.slice(0, Math.max(i, 0)),
+      1,
+      ...Array(binaryArray.length - (i + 1)).fill(0)
+    ];
+  }
+
+  console.log("next binary number", next_binary_number([1, 0]));
+  console.log("next binary number", next_binary_number([1, 1]));
+  console.log("next binary number", next_binary_number([1, 1, 0]));
+  console.log("next binary number", next_binary_number([1, 0, 0, 0, 0, 0, 0, 0, 0, 1]));
+
+</script>
+</body>
+</html>
